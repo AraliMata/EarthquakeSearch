@@ -1,13 +1,16 @@
 import React from 'react'
 import HeroSection from '../../HeroSection'
-import SearchBar from '../../SearchBar'
-import {homeObjOne} from './Data'
+import MapContainer from '../../MapContainer'
+//import SearchBar from '../../SearchBar'
+
+
+
 
 function Home() {
   return (
     <>
-      <SearchBar />
-      <HeroSection {...homeObjOne} />
+    <MapContainer />
+      
     </>
   )
 }
