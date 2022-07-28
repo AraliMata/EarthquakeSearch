@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect} from "react";
+import React, { useMemo, useState, useEffect, useRef} from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import TextField from "@mui/material/TextField";
 import './MapContainer.css';
@@ -9,10 +9,11 @@ export default function MapContainer() {
   const [earthquakeData, setEartquakeData] = useState([]);
   const [geocodingData, setGeocodingData] = useState([]);
   const [inputText, setInputText] = useState("");
-  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+  const [center, setCenter] = useState({ lat: 39.82, lng: -46 });
   const [selectedElement, setSelectedElement] = useState(null);
   const [activeMarker, setActiveMarker] = useState(null);
   const [showInfoWindow, setInfoWindowFlag] = useState(true);
+  const prevMarkersRef = useRef([]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -28,15 +29,37 @@ export default function MapContainer() {
       console.log(inputText);
       var name = inputText;
       fetchGeocodingData(name);
+
   }
 
   const fetchGeocodingData = async (name) => {
     const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=AIzaSyA1dIo_wiTARr5TT3v22UhyOIpM2aytBVc`);
     console.log(data.results[0]);
     setGeocodingData(data.results);
-    console.log('geocodingData')
+    console.log('geocodingData');
+    setCenter(data.results.location);
     fetchData(data.results);
+
+    
+
+    postCity(data, name);
    
+  };
+
+  const postCity = async (data, name) => {
+
+    const city = {
+      name: name,
+      latitude: data.results[0].geometry.location.lat,
+      longitude: data.results[0].geometry.location.lng
+    };
+
+    axios.post(`https://earthquake-search-api.herokuapp.com/location`, { city })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+
   };
 
   const fetchData = async (geocodingData) => {
@@ -68,13 +91,13 @@ export default function MapContainer() {
   </div>
   
   <GoogleMap
-    zoom={10}
+    zoom={2}
     center={center}
     mapContainerClassName="map-container"
     >
-    {earthquakeData.map((element, index) => {
+    {earthquakeData.filter((element, index) => index <= 10).map((element, index) => {
           return (
-            <Marker
+          <Marker
               key={index}
               title={element.datetime}
               position={{
