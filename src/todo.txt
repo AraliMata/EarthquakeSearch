@@ -1,11 +1,20 @@
 #Obtener datos de api NEXT_PUBLIC_GEOCODING_API_KEY
 #Con esos datos llamar a la api de los terremotos
 #Con los datos de la api de los terremotos colocar los 10 markers
-
-
-
-#Hacer que solo sean 10 markers
 #Guardar ciudad buscada
 #Pagina de historial de busqueda
+#Hacer que solo sean 10 markers 
+#Borrar markers de las ciudades buscadas anteriormente
+
+
+#Notificación cuando no se encuentre la ciudad
+#Notificación cuando no se encuentren terremotos en una ciudad
+#Poner el centro del mapa en la ciudad que se buscó
+
+#Acomodar tabla de historia en medio
+#Acomodar barra de busqueda
+#Colores de página de historial de busqueda
+#Logo más bonito
+#Readme de github con datos del proyecto
 
 
