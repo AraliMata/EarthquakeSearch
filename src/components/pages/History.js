@@ -67,7 +67,6 @@ function History({
         headerStyle={{ border: "none !important" }}
         version="4"
         height="30em"
-        width="50%"
         hover
         className="table"
       >
