@@ -80,7 +80,8 @@ export default function MapContainer() {
     var south = geocodingData[0].geometry.viewport.southwest.lat;
     var east = geocodingData[0].geometry.viewport.northeast.lng;
     var west = geocodingData[0].geometry.viewport.southwest.lng;
-    const {data} = await axios.get(`http://api.geonames.org/earthquakesJSON?north=${north}&south=${south}&east=${east}&west=${west}&username=aralimata`);
+    const {data} = await axios.get(
+      `http://api.geonames.org/earthquakesJSON?north=${north}&south=${south}&east=${east}&west=${west}&username=aralimata`);
     console.log(data.earthquakes);
     checkEartquakeData(data.earthquakes); 
     setEartquakeData(data.earthquakes);
