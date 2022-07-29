@@ -18,7 +18,7 @@ function History({
   img,
   alt,
   imgStart
-}) {
+}) { 
     const [historyData, setHistoryData] = useState([{'id': 0, 'name': ".", 'latitude': 0, 'longitude': 0}]);
 
     const orderHistoryData = (data) => {
@@ -56,50 +56,20 @@ function History({
     
   return (
     <>
-      <div
-        className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'}
-      >
-        <div className='container'>
-          <div
-            className='row home__hero-row'
-            style={{
-              display: 'flex',
-              flexDirection: imgStart === 'start' ? 'row-reverse' : 'row'
-            }}
-          >
-            <div className='col'>
-              <div className='home__hero-text-wrapper'>
-                <div className='top-line'>{topLine}</div>
-                <h1 className={lightText ? 'heading' : 'heading dark'}>
-                  {headline}
-                </h1>
-                <p
-                  className={
-                    lightTextDesc
-                      ? 'home__hero-subtitle'
-                      : 'home__hero-subtitle dark'
-                  }
-                >
-                  {description}
-                </p>
-              </div>
-            </div>
-            <div className='col'>
-              <div className='home__hero-img-wrapper'>
-                <img src={img} alt={alt} className='home__hero-img' />
-              </div>
-            </div>
-          </div>
+      <div className='main'>
+        
+        <h1 className="heading dark"> History Search</h1>
+        <p className="home__hero-subtitle dark">Information of previously searched locations</p>
           <BootstrapTable
-        pagination
-        //options={{ page: 1 }}
         data={historyData}
         bodyStyle={{ border: "none" }}
         tableStyle={{ border: "none" }}
         headerStyle={{ border: "none !important" }}
         version="4"
-        height="500"
+        height="30em"
+        width="50%"
         hover
+        className="table"
       >
         <TableHeaderColumn isKey={true} width="150" dataField="name">
           City
@@ -111,7 +81,7 @@ function History({
           Longitude
         </TableHeaderColumn>
       </BootstrapTable>
-        </div>
+       
       </div>
     </>
   );

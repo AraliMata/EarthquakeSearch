@@ -36,13 +36,18 @@ export default function MapContainer() {
     const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=AIzaSyA1dIo_wiTARr5TT3v22UhyOIpM2aytBVc`);
     console.log(data.results[0]);
     setGeocodingData(data.results);
-    console.log('geocodingData');
+    console.log(data);
+
     setCenter(data.results.location);
-    fetchData(data.results);
 
-    
-
-    postCity(data, name);
+    if(data.results.length > 0){
+      fetchData(data.results);  
+      postCity(data.results[0], name);
+    }else{
+      alert('City not found');
+      var tempCity = {"name": name, "geometry": {"location": {"lat": "NaN", "lng": "NaN"}}};
+      postCity(tempCity, name);
+    }
    
   };
 
@@ -50,8 +55,8 @@ export default function MapContainer() {
 
     const city = {
       name: name,
-      latitude: data.results[0].geometry.location.lat,
-      longitude: data.results[0].geometry.location.lng
+      latitude: data.geometry.location.lat,
+      longitude: data.geometry.location.lng
     };
 
     axios.post(`https://earthquake-search-api.herokuapp.com/location`, { city })
@@ -62,6 +67,14 @@ export default function MapContainer() {
 
   };
 
+  const checkEartquakeData = (data) => {
+      if(data.length == 0){
+        alert('No earthquakes were found');
+      }else{
+        alert('Now you can see on the map the details of the earthquakes');
+      }
+  };
+
   const fetchData = async (geocodingData) => {
     var north = geocodingData[0].geometry.viewport.northeast.lat;
     var south = geocodingData[0].geometry.viewport.southwest.lat;
@@ -69,6 +82,7 @@ export default function MapContainer() {
     var west = geocodingData[0].geometry.viewport.southwest.lng;
     const {data} = await axios.get(`http://api.geonames.org/earthquakesJSON?north=${north}&south=${south}&east=${east}&west=${west}&username=aralimata`);
     console.log(data.earthquakes);
+    checkEartquakeData(data.earthquakes); 
     setEartquakeData(data.earthquakes);
   };
 
@@ -77,17 +91,18 @@ export default function MapContainer() {
   return (
   <>
   <div className="main">
-  <div>Hola</div>
-  <div>{geocodingData.length}</div>
-  <div className="search">
-  <span><TextField
+  <h1 className="heading dark"> Welcome to Earthquake Search</h1>
+  <p className="home__hero-subtitle dark">You can start your search for earthquakes</p>
+  <div className="parent">
+  <div className="child"><TextField
           id="outlined-basic"
           variant="outlined"
           onChange={inputHandler}
           fullWidth
           label="Search"
-        /></span>
-        <span><Button buttonSize='btn--wide' buttonColor='blue' onClick={searchCity}>Buscar</Button></span>
+          className="input-field"
+        /></div>
+        <div className="child"><Button buttonSize='btn--wide' buttonColor='blue'  onClick={searchCity}>Buscar</Button></div>
   </div>
   
   <GoogleMap
@@ -134,6 +149,7 @@ export default function MapContainer() {
         ) : null}
 
   </GoogleMap>
+ 
   </div>
   </>);
 }

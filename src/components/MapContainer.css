@@ -1,38 +1,69 @@
 .main {
     display: flex;
-    height: 100vh;
+    height: 150vh;
     width: 100%;
     align-items: center;
     flex-direction: column;
     row-gap: 20px;
+    overflow: scroll;
 }
 
-h1 {
-    margin: 10px;
-    font-size: 40px;
-    color: rgb(1, 1, 59);
-}
+
+.heading {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    font-size: 2em;
+    /*line-height: 1.1;*/
+    font-weight: 600;
+    color: #f7f8fa;
+    padding: 1em;
+    text-align: center;
+  }
+  
+  .dark {
+    color: #1c2237;
+  }
+
+  .home__hero-subtitle {
+    max-width: 440px;
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 24px;
+    margin-top: 0;
+  }
 
 .map-container{
     height: 30em;
     width: 70%;
-    margin: auto;
-    padding: 10px;
+    margin-top: 0.5em;
+  
+    margin-bottom: 2em;
 }
 
 .bold{
     font-weight: bold;
 }
 
-.search {
-    align-items: center;
-    width: 30%;
-    display: inline;
-}
+.input-field{
+    padding: 8px 24px;
+    border-radius: 2px;
+    margin-right: 10px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    border: 1px solid #fff;
+  }
 
-.disp{
-    display: inline;
-}
-
-
+  .parent {
+    margin: 1rem;
+    padding: 1rem 1rem;
+    text-align: center;
+  }
+  .child {
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    vertical-align: middle;
+  }
   
